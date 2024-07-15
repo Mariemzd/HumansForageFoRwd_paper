@@ -1,5 +1,5 @@
 function [ lik, agreement, v, p_explore ] = model_Foraging( data, params, maxBeta)
-%fitRLforaging fits a foraging-RL hybrid model
+
 
 %% pull in all the model parameters
 if isnan(params(4))
@@ -38,8 +38,8 @@ if (thresh >= 0 && thresh <= 2) && (aW >= 0 && aW <= 1) && (aL >= 0 && aL <= 1) 
     [p_choice] = deal(NaN(nArms,nTrials,2));
 
     % seed subjective values
-    v(1) = deal(1); % seed at estimate of world rate  % CAUTION: changed to match RL, 7/29/2022, rbe; was deal(thresh)
-    % seeding values at 0 makes them more exploratory
+    v(1) = deal(1); % seed at estimate of world rate  
+    
     if reward(1)==0; alpha = aL;
     else; alpha = aW; end
     v(2) = (v(1) + alpha.*(reward(1)-v(1)));
@@ -95,10 +95,11 @@ if (thresh >= 0 && thresh <= 2) && (aW >= 0 && aW <= 1) && (aL >= 0 && aL <= 1) 
 
     lik = sum(-log(p_obs));
 
-    % thinking about calculating the model agreement
+
     choice_p = p_explore.*p_choice(:,:,1) + (1-p_explore).*p_choice(:,:,2);
     choice_p_max = max(choice_p);
-    agreement = mean(choice_p(sub2ind(size(choice_p),choice,[1:length(choice)]))==choice_p_max, "omitnan"); %%EDIT MARIEM 12/04/2024
+    agreement = nan.mean(choice_p(sub2ind(size(choice_p),choice,[1:length(choice)]))==choice_p_max); 
+    
     % this is the fraction of the time that the person chose the option
     % that the model thought was the most probable
 
