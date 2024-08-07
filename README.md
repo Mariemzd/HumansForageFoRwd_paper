@@ -8,7 +8,7 @@ Enclosed here you will find several scripts and notebooks to generate the data a
 This repository contains multiple scripts and notebooks that should be run as follows:
 Python should be installed before, including all packages found in _requirement.txt_ .
 
-These scripts were tested on MacOS Version 12.5.1
+These scripts were tested on MacOS Version 12.5.1 with python version 3.9.16
 
 ### Foraging and RL fitting via maximum likelihood estimation 
 
@@ -24,9 +24,9 @@ The expected csv files are also available under the same names.
 1. Download _Simulate_Experiment1_ jupyter notebook.
 2. Download _Walk.py_ . This script will will be called by _Simulate_Experiment1_ notebook to generate the reward walks.
 3. Download _Agent.py_ . This script will will be called by _Simulate_Experiment1_ notebook to simulate both RL and Foraging agents.
-4. Follow the instructions found in _Simulate_Experiment1_.  You should have 1 pickle file named (bestperfDic.pickle).
+4. Follow the instructions found in _Simulate_Experiment1_.  You should have 1 pickle file named (bestperfDic.pickle). [run time ~ 3 minutes]
 The expected pickle file is also available in the repository under the same names. 
-6. Download _PlotAgentPerf_ jupyter notebook. Run the script using the csv files from step (4) and follow the steps provided in the notebook.
+6. Download _PlotAgentPerf_ jupyter notebook. Run the script using the pickle files from step (4) and execute all cells to visualize the plots.
 
 ### Dependencies 
 All software dependencies (including version numbers) can be found in requirements.txt
