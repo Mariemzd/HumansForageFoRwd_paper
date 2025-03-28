@@ -80,7 +80,7 @@ if (aW >= 0 && aW <= 1) && (aL >= 0 && aL <= 1) && (decay >= 0 && decay <= 1) &&
     
     lik = sum(-log(p_obs));
 
-    % thinking about calculating the model agreement
+    
     choice_p_max = max(p_choice);
     agreement = nanmean(p_choice(sub2ind(size(p_choice),choice,[1:length(choice)]))==choice_p_max);
     % this is the fraction of the time that the person chose the option
