@@ -100,7 +100,7 @@ if (thresh >= 0 && thresh <= 2) && (aW >= 0 && aW <= 1) && (b >= 0 && b < maxBet
 
     lik = sum(-log(p_obs));
 
-    % thinking about calculating the model agreement
+    
     choice_p = p_explore.*p_choice(:,:,1) + (1-p_explore).*p_choice(:,:,2);
     choice_p_max = max(choice_p);
     agreement = nanmean(choice_p(sub2ind(size(choice_p),choice,[1:length(choice)]))==choice_p_max);
