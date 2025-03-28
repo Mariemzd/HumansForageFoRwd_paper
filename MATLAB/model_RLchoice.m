@@ -70,7 +70,7 @@ if (a >= 0 && a <= 1) && (ac >= 0 && ac <= 1) && (b >= 0 && bc >= 0) && (b < max
     
     lik = sum(-log(p_obs));
 
-    % thinking about calculating the model agreement
+  
     choice_p_max = max(p_choice);
     agreement = nanmean(p_choice(sub2ind(size(p_choice),choice,[1:length(choice)]))==choice_p_max);
     % this is the fraction of the time that the person chose the option
