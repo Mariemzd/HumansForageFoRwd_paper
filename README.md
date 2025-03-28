@@ -1,7 +1,7 @@
 Humans forage for reward in reinforcement learning tasks. 
-by Meriam Zid, Veldon-James Laurie, Alix Levine-Champagne, Akram Shourkeshti, Dameon Harrell, Alexander B. Herman, R. Becket Ebitz. Code and supplementary information. 
+by Meriam Zid, Veldon-James Laurie, Jorge Ramírez-Ruiz, Alix Lavigne-Champagne, Akram Shourkeshti, Dameon Harrell, Alexander B. Herman, R. Becket Ebitz. Code and supplementary information. 
 
-Link to paper: [Version 1](https://www.biorxiv.org/content/10.1101/2024.07.08.602539v1.article-metrics)
+Link to paper: [Version 2](https://www.biorxiv.org/content/10.1101/2024.07.08.602539v2)
 
 Enclosed here you will find several scripts and notebooks to generate the data and plot the figures in the article "Humans forage for reward in reinforcement learning tasks."
 
