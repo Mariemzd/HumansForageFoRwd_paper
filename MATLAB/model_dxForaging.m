@@ -99,7 +99,7 @@ if (thresh >= -2 && thresh <= 2) && (aW >= 0 && aW <= 1) && (aL >= 0 && aL <= 1)
 
     lik = sum(-log(p_obs));
 
-    % thinking about calculating the model agreement
+   
     choice_p = (1-p_exploit).*p_choice(:,:,1) + p_exploit.*p_choice(:,:,2);
     choice_p_max = max(choice_p);
     agreement = nanmean(choice_p(sub2ind(size(choice_p),choice,[1:length(choice)]))==choice_p_max);
