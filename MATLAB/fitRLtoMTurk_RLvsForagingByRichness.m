@@ -1,9 +1,5 @@
 clear;
-%cd('/Users/mac/Desktop/Becket_models/')
-load('/Users/mac/Desktop/GIT_RL_FORAGING_project/Mariem_Foraging_Q/matlab_data_2AB/humans_2armed_Ebitz_mTurk_State3_RwdProb.mat') % 258 people on mTurk
-
-%%
-
+%first load data
 nIter = 20; % number of iterations to fit for
 maxBeta = 100; % highest value that beta can take on
 rng(1); % seed random
