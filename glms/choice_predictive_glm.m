@@ -52,7 +52,7 @@ for participant = 1:nParticipants
     reward = [good.reward];
 
     if use_subj_vals
-        reward_vals = BayesianIdealObserver(choices+1, reward) ; % subjective values instead
+        reward_vals = BayesianIdealObserver(choices+1, reward,false) ; % subjective values instead
         reward_vals = reward_vals' ;
     else
         reward_vals = vertcat(good.reward_seed) ;
@@ -546,3 +546,4 @@ for i = 1:length(b)
 end
 filename = ['nsubbic_glm.pdf'] ;
 saveas(gcf,fullfile(figpath,filename))
+
