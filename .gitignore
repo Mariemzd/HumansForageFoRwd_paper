@@ -1,1 +1,16 @@
 demo/
+.DS_Store
+Cathys_models/
+Figs/
+Figure_fitAIC_ML.ipynb
+Human_data_analysis_ML.ipynb
+MATLAB/.DS_Store
+RT_2AB.ipynb
+behByEnvFeatures/.DS_Store
+data.zip
+data_vol/
+excluded_ppl_2AB/
+fit/
+glms/.DS_Store
+quick_plot/
+simulation_modules/
