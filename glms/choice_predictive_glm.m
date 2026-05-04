@@ -1,4 +1,6 @@
 
+% figure 1F-G && supplementary figure S1A-D
+
 % Create a GLM to explicitly test a central assumption of the compare-to-threshold model,
 % which predicts that choice repetition depends only on the value of the chosen option (VRepeat),
 % and *not* on the value of the unchosen option (VSwitch).
@@ -8,18 +10,15 @@
 % Model 2 (VRepeat Only): RepeatChoice ~ VRepeat
 % Model 3 (VSwitch Only): RepeatChoice ~ VSwitch
 
-% figure 1F-G && supplementary figure S1A-D
+
 % VJL2025
 
 %% directories
-
 clear; close all ;
-codepath= '/Users/mac/Documents/MATLAB/ForagingByRichness/review/round2_reviews' ;
-datapath = '/Users/mac/Documents/MATLAB/ForagingByRichness/review/fitting/2AB_mturk/singleiti_202203011023_lightweight.mat' ;
-figpath = '/Users/mac/Documents/MATLAB/ForagingByRichness/review/figs/' ; 
-cd(codepath)
+
+datafile =  '../data/singleiti_202203011023_lightweight.mat' ; 
 addpath('/Users/mac/Documents/MATLAB/general/');
-load(datapath)
+load(datafile)
 %%
 use_subj_vals = 1 ; % 0 = objective probabilities
 
@@ -315,7 +314,7 @@ if total_VSwitch > 0
 end
 
 filename = ['pieChart_vSwitch.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
+% saveas(gcf,fullfile(figpath,filename))
 %%
 % pie Chart for VRepeat
 X_VRepeat_4 = [
@@ -346,7 +345,7 @@ if total_VRepeat_4 > 0
 end
 
 filename = ['pieChart_vRepeat.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
+% saveas(gcf,fullfile(figpath,filename))
 %% Plot beta coefficients for VRepeat (Subdivided by VSwitch, with cross-over)
 [sorted_betas_VRepeat, sortIdx_VRepeat] = sort(betasVRepeat);
 
@@ -417,7 +416,7 @@ legend({ ...
 ylim([-35 35]);
 xlim([0 254]);
 filename = ['betas_vRepeat.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
+% saveas(gcf,fullfile(figpath,filename))
 %% Same, but for VSwitch
 [sorted_betas_VSwitch, sortIdx_VSwitch] = sort(betasVSwitch);
 
@@ -478,7 +477,7 @@ ylim([-35 35]);
 xlim([0 254]);
 
 filename = ['betas_vSwitch.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
+% saveas(gcf,fullfile(figpath,filename))
 
 %% AIC & BIC plots
 
@@ -517,7 +516,7 @@ end
 
 
 filename = ['bic_glms.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
+% saveas(gcf,fullfile(figpath,filename))
 
 
 %% BIC count how many participants are better explained by the different glm models?
@@ -545,5 +544,5 @@ for i = 1:length(b)
         'VerticalAlignment','bottom');
 end
 filename = ['nsubbic_glm.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
+% saveas(gcf,fullfile(figpath,filename))
 
