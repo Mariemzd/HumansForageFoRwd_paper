@@ -239,8 +239,8 @@ end
 %% distributions - for each agent, we want to extract its fingerprint
 %   as a function of both sparsity and richness
 
-% glmDist = 'binomial';
-glmDist = 'normal';
+glmDist = 'binomial';
+% glmDist = 'normal';
 
 rng(1);
 nSims = 50;
@@ -414,12 +414,34 @@ ds2 = pdist2(unique(featureMx(:,:,2),'rows'),featureMx(1,:,3)); % for
 bar(2,nanmean(ds2),'BarWidth',0.75,'FaceAlpha',0.5)
 plot(ones(size(ds2)).*2,ds2,'x','MarkerEdgeColor',[.5 .5 .5])
 
-[h,p,ci,stat] = ttest2(ds1,ds2);
-if h
+
+n1 = length(ds1) ; n2 = length(ds2) ; 
+
+if n1 == n2 
+   [h,p,ci,stat] = ttest2(ds1,ds2);
+
+   if h
     sprintf('avg. distance to rl = %2.2f +/- %2.2f STD',nanmean(ds1),nanstd(ds1))
     sprintf('avg. distance to foraging = %2.2f +/- %2.2f STD',nanmean(ds2),nanstd(ds2))
     sprintf('sig. difference in distances, p = %0.4f, t(%2.0f) = %2.2f',p,stat.df,stat.tstat)
-end
+   end
+
+    
+else 
+    [p,h,stats] = ranksum(ds1,ds2) ;
+
+    % effect size from % https://pmc.ncbi.nlm.nih.gov/articles/PMC12701665/
+    num = stats.ranksum - (n1 * (n1 + 1)) / 2;
+    den = sqrt(n1*n2*(n1+n2+1/12)) ;
+    z = num/den ;
+    r = z/sqrt(n1+n2) ;
+    sprintf('med. distance to rl = %2.2f',nanmedian(ds1))
+    sprintf('med. distance to foraging = %2.2f',nanmedian(ds2))
+    sprintf('sig. difference in distances, W(%.0f) = %.0f, p = %.4f, r = %.2f', ...
+    (n1 + n2), stats.ranksum, p, r)
+
+end 
+
 
 set(gca,'FontSize',12);
 xlim([0 3]);
