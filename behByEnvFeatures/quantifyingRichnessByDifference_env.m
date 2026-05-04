@@ -1,7 +1,8 @@
-clear;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness')
+clear; close all ; 
+
 addpath('/Users/mac/Documents/MATLAB/general/')
-load('singleiti_202203011023_lightweight.mat') % 258 people on mTurk
+datafile =  '../data/singleiti_202203011023_lightweight.mat' ; 
+load(datafile)
 
 % analyses found in figure 2 and supplementary figure S1C-G
 
@@ -62,7 +63,7 @@ ylabel('richness')
 
 
 % save the figure
-saveas(gcf,'richnessBySparsity_richnessByDifference','epsc')
+%saveas(gcf,'richnessBySparsity_richnessByDifference','epsc')
 
 
 %% now we want to plot both agents (or something like them) alongside the
@@ -233,7 +234,7 @@ for basis = 1:2
 end
 
 % save the figure
-saveas(gcf,'strategiesByRichnessAndSparsity_richnessByDifference','epsc')
+% saveas(gcf,'strategiesByRichnessAndSparsity_richnessByDifference','epsc')
 
 %% distributions - for each agent, we want to extract its fingerprint
 %   as a function of both sparsity and richness
