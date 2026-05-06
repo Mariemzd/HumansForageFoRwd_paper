@@ -1,39 +1,35 @@
-Humans forage for reward in reinforcement learning tasks. 
-by Meriam Zid, Veldon-James Laurie, Jorge Ramírez-Ruiz, Alix Lavigne-Champagne, Akram Shourkeshti, Dameon Harrell, Alexander B. Herman, R. Becket Ebitz. Code and supplementary information. 
+**Authors:** Meriam Zid, Veldon-James Laurie, Jorge Ramírez-Ruiz, Alix Lavigne-Champagne, Akram Shourkeshti, Dameon Harrell, Alexander B. Herman, R. Becket Ebitz.
 
-Link to paper: [Version 2](https://www.biorxiv.org/content/10.1101/2024.07.08.602539v2)
+**Link to paper:** [Version 2](https://www.biorxiv.org/content/10.1101/2024.07.08.602539v2)  
+**Link to official version:** to be added.
 
-Enclosed here you will find several scripts and notebooks to generate the data and plot the figures in the article "Humans forage for reward in reinforcement learning tasks."
+## Overview
+This repository contains the scripts and Jupyter notebooks required to generate the data, perform analyses, and reproduce the figures presented in the article "Humans forage for reward in reinforcement learning tasks."
 
-This repository contains multiple scripts and notebooks that should be run as follows:
-Python should be installed before, including all packages found in _requirement.txt_ .
+## Reproducing the Figures
 
-These scripts were tested on MacOS Version 12.5.1 with python version 3.9.16
+## Figure 1 & Supplementary Figure 1
+*   **Experiment 1 Behavior Analysis:** Run the notebook `\Human_data_analysis_2AB.ipynb`.
+*   **Experiment 1 Choice Predictive GLM:** Scripts are located in the `\glms\` directory.
 
-### Foraging and RL fitting via maximum likelihood estimation 
+## Figure 2 & Supplementary Figure 2
+*   **Environment Features Analysis:** Use the code found in `behByEnvFeatures/quantifyingRichnessByDifference_env`.
 
-1. Download _FitModels_Experiment1_ jupyter notebook.
-2. Download _Experiment1_data.pickle_ the sample dataset from experiment 1 (restless 2-armed bandit).
-3. Run _FitModels_Experiment1_ using the sample data, by following the steps provided in the notebook. [run time ~ 13 minutes]
-4. Save the fitted parameters and corresponding likelihoods to plot the results. You should have 2 csv files named (ForagingParams.csv and RLParams.csv).
-The expected csv files are also available under the same names. 
-6. Download _FigureFitExperiment1_ jupyter notebook. Run the script using the csv files from step (4) and follow the steps provided in the notebook.
-   
-### Simulating Foraging and RL agents in a restless 2-armed bandit environment
+## Figure 3 & Supplementary Figure 4 (Model Fitting & Agent Performance)
+*   **Optimal Agent Simulations:** First, run `Simulate_Experiment1.ipynb`, and then use `PlotAgentPerf.ipynb` to visualize the results.
+*   **Model Fitting:** Fitting code is provided in both Python and MATLAB.
+    *   **Python:** `fitModels.ipynb` — This notebook contains all Python models used to generate Figure 3 and Supplementary Figure 4.
+    *   **MATLAB:** 
+        *   **Fitting:** Run `fitRLtoMTurk_RLvsForagingByRichness.m`. This is the main script that fits the data by calling the individual models (which are modularized into their own separate scripts).
+        *   **Plotting (Panels G–K):** Run `evalFits_RLvsForagingByRichness.m` to plot the resulting model fits and log-likelihoods.
 
-1. Download _Simulate_Experiment1_ jupyter notebook.
-2. Download _Walk.py_ . This script will will be called by _Simulate_Experiment1_ notebook to generate the reward walks.
-3. Download _Agent.py_ . This script will will be called by _Simulate_Experiment1_ notebook to simulate both RL and Foraging agents.
-4. Follow the instructions found in _Simulate_Experiment1_.  You should have 1 pickle file named (bestperfDic.pickle). [run time ~ 3 minutes]
-The expected pickle file is also available in the repository under the same names. 
-6. Download _PlotAgentPerf_ jupyter notebook. Run the script using the pickle files from step (4) and execute all cells to visualize the plots.
+## Figure 4
+*   **Simulations:** Generate the simulations shown in Figure 4 using the MATLAB script `simulateAgentsExperiment1_vMatchingEnv_RLvsForagingByRichness.m`.
+*   **Plotting & Mixture Model:** To plot the results and run the exponential mixture model, use `compareTimes_RLvsForagingByRichness`.
 
-### Dependencies 
-All software dependencies (including version numbers) can be found in requirements.txt
+## Other
+*   **Supplementary Figure 3:** fitsStability.m
+*   **Supplementary Figure 6:** unchosenOption_exploreStrategy.m
 
-
-
-### Licence
-
-MIT License
-Copyright (c) 2024 Meriam Zid and R. Becket Ebitz
+## Data Availability
+All behavioral data from all experiments, all model fits, and the pre-generated simulation datasets used for these analyses are available on figshare under : to be added
