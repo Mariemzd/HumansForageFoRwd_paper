@@ -1,14 +1,13 @@
 clear ; close all ; 
 ogpath = '/Users/mac/Documents/python/ForagingByRichness/Decision_making_models/MATLAB/simulations/' ;
 cd(ogpath)
-cd('./SimulationsOutputs')
+cd('./simulationsOuputs') 
 
 files = dir;
 fnames = {files(find(~cellfun(@isempty,strfind({files.name},'simResults')))).name};
 
 for k = 1:length(fnames)
     load(fnames{k})
-
     if k == 1
         tmp = x;
     else
