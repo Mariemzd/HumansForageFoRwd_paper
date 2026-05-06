@@ -28,4 +28,4 @@ This repository contains the scripts and Jupyter notebooks required to generate 
 *   **Plotting & Mixture Model:** To plot the results and run the exponential mixture model, use `compareTimes_RLvsForagingByRichness`.
 
 ## Data Availability
-The pre-generated simulation datasets used for these analyses are available in the **"SimulationsOutputs"** folder on Figshare.
+All behavioral data from all experiments, all model fits, and the pre-generated simulation datasets used for these analyses are available on figshare under : to be added
