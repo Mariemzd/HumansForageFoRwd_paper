@@ -32,4 +32,4 @@ This repository contains the scripts and Jupyter notebooks required to generate 
 *   **Supplementary Figure 6:** unchosenOption_exploreStrategy.m
 
 ## Data Availability
-All behavioral data from all experiments, all model fits, and the pre-generated simulation datasets used for these analyses are available on figshare under : to be added
+All behavioral data from all experiments, all model fits, and the pre-generated simulation datasets used for these analyses are available on figshare under : 10.6084/m9.figshare.32193990 
