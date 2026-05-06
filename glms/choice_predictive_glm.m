@@ -10,17 +10,19 @@
 % Model 2 (VRepeat Only): RepeatChoice ~ VRepeat
 % Model 3 (VSwitch Only): RepeatChoice ~ VSwitch
 
-
-% VJL2025
+% VJL2026
 
 %% directories
 clear; close all ;
 
-datafile =  '../data/singleiti_202203011023_lightweight.mat' ; 
-addpath('/Users/mac/Documents/MATLAB/general/');
+datafile =  '/data/singleiti_202203011023_lightweight.mat' ; 
 load(datafile)
+
 %%
-use_subj_vals = 1 ; % 0 = objective probabilities
+use_subj_vals = 0 ; % 0 = objective probabilities
+
+% For the subjective values,you can either have static bandit Baysian update or diffusing bandit Bayesian update.
+static = 1 ; % 0 = diffusing bandit bayesian update
 
 nParticipants = numel(trials);
 skipped_participants = [];
@@ -51,7 +53,7 @@ for participant = 1:nParticipants
     reward = [good.reward];
 
     if use_subj_vals
-        reward_vals = BayesianIdealObserver(choices+1, reward,false) ; % subjective values instead
+        reward_vals = BayesianIdealObserver(choices+1, reward,static) ; % subjective values instead
         reward_vals = reward_vals' ;
     else
         reward_vals = vertcat(good.reward_seed) ;
@@ -264,18 +266,14 @@ is_pos_repeat_and_nonsig_switch = is_sig_pos_vrepeat & is_not_sig_vswitch;
 num_pos_repeat_and_nonsig_switch = sum(is_pos_repeat_and_nonsig_switch);
 fprintf('Participants with Sig Positive VRepeat AND Non-Sig VSwitch: %d\n', num_pos_repeat_and_nonsig_switch);
 
-%% Plot pie charts for significant betas
+%% Plot pie charts for significant betas (VSwitch first)
 
-% colormaps - might change colors later
-customColors_VRepeat = [0.25 0.55 0.85; 0.85 0.35 0.25; 0.95 0.85 0.30];
-customColors_4 = [
+customColors_VSwitch_4 = [
     0.25 0.55 0.85;  % Blue (Sig Pos)
-    0.85 0.35 0.25;  % Dark Red (comparators)
-    0.95 0.60 0.50;  % Lighter Red (sig neg non comparators)
-    0.95 0.85 0.30   % Yellow (Non-Sig)
-    ];
-customColors_VSwitch_4 = customColors_4;
-customColors_VRepeat_4 = customColors_4;
+    0.45 0.50 0.20;  % (comparators)
+    0.95 0.60 0.50;  % Lighter Red (sig neg (non comparators))
+    0.00 0.25 0.50   % dark blue (Non-Sig)
+];
 
 is_sig_pos_VRepeat = (betasVRepeat > 0 & significant_VRepeat_full);
 is_sig_neg_VRepeat = (betasVRepeat < 0 & significant_VRepeat_full);
@@ -287,11 +285,11 @@ is_non_sig_VSwitch = ~significant_VSwitch_full;
 
 % Pie Chart for VSwitch
 X_VSwitch = [
-    sum(is_sig_pos_VSwitch), ...
-    sum(is_sig_neg_VSwitch & is_sig_pos_VRepeat), ...
-    sum(is_sig_neg_VSwitch & ~is_sig_pos_VRepeat), ...
-    sum(is_non_sig_VSwitch)
-    ];
+    sum(is_sig_pos_VSwitch), ... %blue (+beta)
+    sum(is_sig_neg_VSwitch & is_sig_pos_VRepeat), ... %-Beta (comparators (dark red))
+    sum(is_sig_neg_VSwitch & ~is_sig_pos_VRepeat), ... %-Beta (non-comparators) (light red))
+    sum(is_non_sig_VSwitch) %non sig. 
+];
 total_VSwitch = sum(X_VSwitch);
 
 if total_VSwitch > 0
@@ -300,52 +298,61 @@ if total_VSwitch > 0
         sprintf('Group 1: Sig. Neg. VSwitch & Sig. Pos. VRepeat (n=%d, %.1f%%)', X_VSwitch(2), (X_VSwitch(2)/total_VSwitch)*100), ...
         sprintf('Group 2: Sig. Neg. VSwitch & (Neg/Non VRepeat) (n=%d, %.1f%%)', X_VSwitch(3), (X_VSwitch(3)/total_VSwitch)*100), ...
         sprintf('Non-Significant (n=%d, %.1f%%)', X_VSwitch(4), (X_VSwitch(4)/total_VSwitch)*100) ...
-        };
-    legend_labels_VSwitch = {'Significant Positive', 'Group 1: Sig. Neg. VSwitch & Sig. Pos. VRepeat', ...
-        'Group 2: Sig. Neg. VSwitch & (Neg/Non VRepeat)', 'Non-Significant'};
-
+    };
+    legend_labels_VSwitch = {'Sign. Beta pos.', 'Comparators (Sig. Neg. VSwitch & Sig. Pos. VRepeat)', ...
+        'Other Sig. Neg. VSwitch (non comparators)', 'Non-Significant'};
+    
     figure;
     h_pie = pie(X_VSwitch, X_VSwitch > 0, labels_VSwitch);
-    title('Distribution of All Betas (VSwitch, Subdivided by VRepeat)', 'FontSize', 14);
+    title('Distribution of All Betas (VSwitch)', 'FontSize', 14);
     colormap(customColors_VSwitch_4);
     set(findobj(h_pie, 'Type', 'text'), 'FontSize', 10, 'Color', 'black');
     legend(legend_labels_VSwitch, 'Location', 'eastoutside', 'FontSize', 10);
     set(gcf, 'Position', [100 100 800 600]);
 end
 
-filename = ['pieChart_vSwitch.pdf'] ;
-% saveas(gcf,fullfile(figpath,filename))
-%%
-% pie Chart for VRepeat
-X_VRepeat_4 = [
-    sum(is_sig_pos_VRepeat), ...
-    sum(is_sig_neg_VRepeat & is_sig_pos_VSwitch), ...
-    sum(is_sig_neg_VRepeat & ~is_sig_pos_VSwitch), ...
-    sum(is_non_sig_VRepeat)
-    ];
-total_VRepeat_4 = sum(X_VRepeat_4);
+%% VRepeat now
 
-if total_VRepeat_4 > 0
-    labels_VRepeat_4 = { ...
-        sprintf('Significant Positive (n=%d, %.1f%%)', X_VRepeat_4(1), (X_VRepeat_4(1)/total_VRepeat_4)*100), ...
-        sprintf('Group 1: Sig. Neg. VRepeat & Sig. Pos. VSwitch (n=%d, %.1f%%)', X_VRepeat_4(2), (X_VRepeat_4(2)/total_VRepeat_4)*100), ...
-        sprintf('Group 2: Sig. Neg. VRepeat & (Neg/Non VSwitch) (n=%d, %.1f%%)', X_VRepeat_4(3), (X_VRepeat_4(3)/total_VRepeat_4)*100), ...
-        sprintf('Non-Significant (n=%d, %.1f%%)', X_VRepeat_4(4), (X_VRepeat_4(4)/total_VRepeat_4)*100) ...
-        };
-    legend_labels_VRepeat_4 = {'Significant Positive', 'Group 1: Sig. Neg. VRepeat & Sig. Pos. VSwitch', ...
-        'Group 2: Sig. Neg. VRepeat & (Neg/Non VSwitch)', 'Non-Significant'};
+colors_VRepeat = [
+    0.25 0.55 0.85;  % Blue (Sig Pos)
+    0.45 0.50 0.20;  % (comparators)
+    0.95 0.60 0.50;  % Lighter Red (sig neg (non comparators))
+    0.00 0.25 0.50   %  (Non-Sig)
+];
+
+X_VRepeat_Revised = [
+    sum(is_sig_pos_VRepeat & ~is_sig_neg_VSwitch), ...     % Sig Pos VRepeat (beta pos) (no comparators
+    sum(is_sig_neg_VSwitch & is_sig_pos_VRepeat), ...      % comparators (Neg Repeat & Pos Switch)
+    sum(is_sig_neg_VRepeat & ~is_sig_pos_VSwitch), ...     % sig neg. beta
+    sum(is_non_sig_VRepeat)                                % 5. Non-Significant VRepeat
+];
+
+total_VRepeat_Revised = sum(X_VRepeat_Revised);
+
+if total_VRepeat_Revised > 0
+    labels_VRepeat_Revised = { ...
+        sprintf('Significant Positive VRepeat (n=%d, %.1f%%)', X_VRepeat_Revised(1), (X_VRepeat_Revised(1)/total_VRepeat_Revised)*100), ...
+        sprintf('comparators: Neg VRepeat & Pos VSwitch (n=%d, %.1f%%)', X_VRepeat_Revised(2), (X_VRepeat_Revised(2)/total_VRepeat_Revised)*100), ...
+        sprintf('other neg sig: Neg VRepeat & Other (n=%d, %.1f%%)', X_VRepeat_Revised(3), (X_VRepeat_Revised(3)/total_VRepeat_Revised)*100), ...
+        sprintf('Non-Significant (n=%d, %.1f%%)', X_VRepeat_Revised(4), (X_VRepeat_Revised(4)/total_VRepeat_Revised)*100) ...
+    };
 
     figure;
-    h_pie = pie(X_VRepeat_4, X_VRepeat_4 > 0, labels_VRepeat_4);
-    title('Distribution of All Betas (VRepeat, Subdivided by VSwitch)', 'FontSize', 14);
-    colormap(customColors_VRepeat_4);
+    h_pie = pie(X_VRepeat_Revised, X_VRepeat_Revised > 0, labels_VRepeat_Revised);
+    title('Distribution of VRepeat', 'FontSize', 14);
+    colormap(colors_VRepeat);
     set(findobj(h_pie, 'Type', 'text'), 'FontSize', 10, 'Color', 'black');
-    legend(legend_labels_VRepeat_4, 'Location', 'eastoutside', 'FontSize', 10);
     set(gcf, 'Position', [100 100 800 600]);
+
+    legend_labels_VRepeat_4 = {
+    'sign pos (without comparators)', ...
+    'comparators (Pos VRep & Neg VSw)', ...
+    'sign neg vrepeat', ...
+    'Non-Significant'
+};
+legend(legend_labels_VRepeat_4, 'Location', 'eastoutside', 'FontSize', 10);
 end
 
-filename = ['pieChart_vRepeat.pdf'] ;
-% saveas(gcf,fullfile(figpath,filename))
 %% Plot beta coefficients for VRepeat (Subdivided by VSwitch, with cross-over)
 [sorted_betas_VRepeat, sortIdx_VRepeat] = sort(betasVRepeat);
 
@@ -365,6 +372,7 @@ sorted_group2_neg = (sorted_sig_neg_VRepeat & ~sorted_sig_pos_VSwitch);
 
 sorted_sig_pos_VRepeat(sorted_cross_group) = false;
 
+
 figure('Position',[461,535,481,245]);
 hold on;
 title('Beta Coefficients for VRepeat (Subdivided by VSwitch, with Cross-Over Override)');
@@ -372,29 +380,24 @@ xlabel('Participant (sorted)');
 ylabel('Beta Value');
 
 
-% Non-significant (Black)
+% Non-significant (dark blue)
 plot(find(sorted_non_sig_VRepeat), sorted_betas_VRepeat(sorted_non_sig_VRepeat), ...
-    'o', 'MarkerEdgeColor', 'k', 'MarkerFaceColor', 'k', 'MarkerSize', 4);
+    'o', 'MarkerEdgeColor', colors_VRepeat(4,:), 'MarkerFaceColor', colors_VRepeat(4,:), 'MarkerSize', 4);
 
-% Significant Positive (Blue - Color 1)
+% Significant Positive (Blue)
 plot(find(sorted_sig_pos_VRepeat), sorted_betas_VRepeat(sorted_sig_pos_VRepeat), ...
-    'o', 'MarkerEdgeColor', customColors_VRepeat_4(1,:), ...
-    'MarkerFaceColor', customColors_VRepeat_4(1,:), 'MarkerSize', 4);
+    'o', 'MarkerEdgeColor', colors_VRepeat(1,:), ...
+    'MarkerFaceColor', colors_VRepeat(1,:), 'MarkerSize', 4);
 
 % Sig. Pos. VRepeat & Sig. Neg. VSwitch (Yellow-ish)
 plot(find(sorted_cross_group), sorted_betas_VRepeat(sorted_cross_group), ...
-    'o', 'MarkerEdgeColor', [0.95 0.85 0.30], ... % yellowish color
-    'MarkerFaceColor', [0.95 0.85 0.30], 'MarkerSize', 5);
-
-% Sig Neg VRepeat & Sig Pos VSwitch (Dark Red - Color 2)
-plot(find(sorted_group1_neg), sorted_betas_VRepeat(sorted_group1_neg), ...
-    'o', 'MarkerEdgeColor', customColors_VRepeat_4(2,:), ...
-    'MarkerFaceColor', customColors_VRepeat_4(2,:), 'MarkerSize', 4);
+    'o', 'MarkerEdgeColor', colors_VRepeat(2,:), ... 
+    'MarkerFaceColor', colors_VRepeat(2,:), 'MarkerSize', 5);
 
 % Sig Neg VRepeat & (Neg/Non VSwitch) (Lighter Red - Color 3)
 plot(find(sorted_group2_neg), sorted_betas_VRepeat(sorted_group2_neg), ...
-    'o', 'MarkerEdgeColor', customColors_VRepeat_4(3,:), ...
-    'MarkerFaceColor', customColors_VRepeat_4(3,:), 'MarkerSize', 4);
+    'o', 'MarkerEdgeColor', colors_VRepeat(3,:), ...
+    'MarkerFaceColor', colors_VRepeat(3,:), 'MarkerSize', 4);
 
 % legend and other stuff
 yline(0, 'k--', 'LineWidth', 1.5);
@@ -406,10 +409,9 @@ end
 
 legend({ ...
     'Non-Significant', ...
-    'Significant Positive', ...
-    'Cross-Over: Sig. Pos. VRepeat & Sig. Neg. VSwitch', ...
-    'Group 1: Sig. Neg. VRepeat & Sig. Pos. VSwitch', ...
-    'Group 2: Sig. Neg. VRepeat & (Neg/Non VSwitch)', ...
+    'Significant Positive (without comparators)', ...
+    'comparators: Sig. Pos. VRepeat & Sig. Neg. VSwitch', ...
+    'Sig. Neg. VRepeat', ...
     'beta = 0'
     }, 'Location', 'best', 'FontSize', 8);
 
@@ -438,16 +440,16 @@ title('Beta Coefficients for VSwitch (Subdivided by VRepeat)');
 xlabel('Participant (sorted)');
 ylabel('Beta Value');
 
-% Non-significant (Black)
+% Non-significant (dark blue)
 plot(find(sorted_non_sig_VSwitch), sorted_betas_VSwitch(sorted_non_sig_VSwitch), ...
-    'o', 'MarkerEdgeColor', 'k', 'MarkerFaceColor', 'k', 'MarkerSize', 4);
+    'o', 'MarkerEdgeColor', customColors_VSwitch_4(4,:), 'MarkerFaceColor', customColors_VSwitch_4(4,:), 'MarkerSize', 4);
 
-% Significant Positive (Blue - Color 1)
+% Significant Positive (Blue)
 plot(find(sorted_sig_pos_VSwitch), sorted_betas_VSwitch(sorted_sig_pos_VSwitch), ...
     'o', 'MarkerEdgeColor', customColors_VSwitch_4(1,:), ...
     'MarkerFaceColor', customColors_VSwitch_4(1,:), 'MarkerSize', 4);
 
-% Sig Neg (Dark Red - Color 2)
+% Sig Neg (yellowish - Color 2)
 plot(find(sorted_group1_neg), sorted_betas_VSwitch(sorted_group1_neg), ...
     'o', 'MarkerEdgeColor', customColors_VSwitch_4(2,:), ...
     'MarkerFaceColor', customColors_VSwitch_4(2,:), 'MarkerSize', 4);
@@ -468,8 +470,8 @@ end
 legend({ ...
     'Non-Significant', ...
     'Significant Positive', ...
-    'Group 1: Sig. Neg. VSwitch & Sig. Pos. VRepeat', ...
-    'Group 2: Sig. Neg. VSwitch & (Neg/Non VRepeat)', ...
+    'comparators: Sig. Neg. VSwitch & Sig. Pos. VRepeat', ...
+    'Sig. Neg. VSwitch (non comparators)', ...
     'beta = 0'
     }, 'Location', 'best', 'FontSize', 8); % Reduced font size slightly for fit
 
