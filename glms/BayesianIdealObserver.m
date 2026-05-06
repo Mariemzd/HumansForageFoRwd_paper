@@ -8,7 +8,7 @@ if nargin<3
     static = true ; 
 end 
 
- %hi
+ %hi Mariem
 
 nTrials = length(choice);
 nOptions = max(choice);
