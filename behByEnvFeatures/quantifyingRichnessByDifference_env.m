@@ -417,7 +417,7 @@ if n1 == n2
 else 
     [p,h,stats] = ranksum(ds1,ds2) ;
 
-    
+    % effect size from % https://pmc.ncbi.nlm.nih.gov/articles/PMC12701665/
     num = stats.ranksum - (n1 * (n1 + 1)) / 2;
     den = sqrt(n1*n2*(n1+n2+1/12)) ;
     z = num/den ;
