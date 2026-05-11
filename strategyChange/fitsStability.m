@@ -1,15 +1,11 @@
 % choiceLL, 1st is foraging 2nd is standard RL
 % All analyses found are meant to explore whether people change strategy
 % during the session : from compare alternatives to compare to threshold
-% for example. % supplementary figure 3
+% supplementary figure 3
 
 clear; close all ;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness/review/choiceLLAnalysis_2AB/')
-addpath ../fitting/2AB_mturk/
-addpath ../fitting/models/
-addpath /Users/mac/Documents/MATLAB/general/
-savepath = './2AB_mturk/' ;
 
+% first recover individual choice likelihood from fits 
 load('singleiti_202203011023_lighweight_choiceLL_RLvsForaging_og251010.mat')
 
 load fitRLtoMTurk_20rounds_220724_0322.mat %Becket's fits 
