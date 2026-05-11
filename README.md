@@ -28,7 +28,7 @@ This repository contains the scripts and Jupyter notebooks required to generate 
 *   **Plotting & Mixture Model:** To plot the results and run the exponential mixture model, use `compareTimes_RLvsForagingByRichness`.
 
 ## Other
-*   **Supplementary Figure 3:**open the folder 'strategyChange/' and run fitsStability.m*
+*   **Supplementary Figure 3:**open the folder 'strategyChange/' and run fitsStability.m
    **Supplementary Figure 6:** unchosenOption_exploreStrategy.m
 
 ## Data Availability
