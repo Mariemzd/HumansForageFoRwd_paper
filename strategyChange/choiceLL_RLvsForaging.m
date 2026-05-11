@@ -1,14 +1,9 @@
-%% recover choice ll from params ;
+%% recover choice likelihoods from params ;
 clear;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness/review/choiceLLAnalysis_2AB/')
-addpath ../fitting/2AB_mturk/
-addpath ../fitting/models/
-addpath /Users/mac/Documents/MATLAB/general/
-savepath = './2AB_mturk/' ;
 
-load('singleiti_202203011023_lightweight.mat')
-load('fitRLtoMTurk_20rounds_220724_0322.mat') %this is becket's fits
-% load('fitRLto_singleiti_202203011023_lightweight.mat')
+load('data/singleiti_202203011023_lightweight.mat') %load Experiment 1 data
+load('data/fitRLtoMTurk_20rounds_220724_0322.mat') %load Experiment 1 fits
+
 nsubs = length(trials);
 ntrials = 300 ;
 epsilon = 1e-100 ;
@@ -72,8 +67,7 @@ for i=1:nsubs
         arm = sideList(j) ;
 
         %Softmax function
-% 
-        % probList(2,j) = exp((Qvalue(arm)*beta)-LSE(Qvalue*beta)) ;
+
         
         probList(2,j) = exp(Qvalue(arm)*beta) / sum(exp(Qvalue.*beta));
 
@@ -83,7 +77,6 @@ for i=1:nsubs
     end
 
  
-    % trials(i).choiceLogLike = log(probList+epsilon) ;
     trials(i).choiceLogLike = log(probList+epsilon) ;
     trials(i).probs = probList ;
     
@@ -101,7 +94,6 @@ end
 
 
 %%
-% filename = strcat('singleiti_202203011023_lighweight_choiceLL_RLvsForaging',datestr(datetime,'yymmdd'),'.mat');
-filename = strcat('singleiti_202203011023_lighweight_choiceLL_RLvsForaging_og',datestr(datetime,'yymmdd'),'.mat');
-
-save(filename, 'trials') 
+% filename = strcat('data\singleiti_202203011023_lighweight_choiceLL_RLvsForaging',datestr(datetime,'yymmdd'),'.mat');
+% 
+% save(filename, 'trials') 

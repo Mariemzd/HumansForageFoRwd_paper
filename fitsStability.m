@@ -5,11 +5,11 @@
 
 clear; close all ;
 
-addpath('data/')
-cd('strategyChange/') 
-
 % first recover individual choice likelihood from fits 
-choiceLL_RLvsForaging
+load('singleiti_202203011023_lighweight_choiceLL_RLvsForaging_og251010.mat')
+
+load fitRLtoMTurk_20rounds_220724_0322.mat %Becket's fits 
+
 
 figpath = '/Users/mac/Documents/MATLAB/ForagingByRichness/review/figs/';
 
@@ -84,15 +84,14 @@ bestff = nansum(aicWf(:,1)==1); %chose foraging first
 
 bestlll = nansum(aicWl(:,1)==1);%chose foraging last
 
-switchedfr = nansum(aicWf(:,1)==1 & aicWl(:,2)==1) ;%started foraging then moved to rl 
-switchedrl = nansum(aicWf(:,2)==1 & aicWl(:,1)==1) ; %started rl then moved to foraging
-switchers_idx = [find(aicWf(:,1)==1 & aicWl(:,2)==1);find(aicWf(:,2)==1 & aicWl(:,1)==1)] ; 
+switchedfr = nansum(aicWf(:,1)==1 & aicWl(:,2)==1) %started foraging then moved to rl 
+switchedrl = nansum(aicWf(:,2)==1 & aicWl(:,1)==1) %started rl then moved to foraging
+switchers_idx = [find(aicWf(:,1)==1 & aicWl(:,2)==1);find(aicWf(:,2)==1 & aicWl(:,1)==1)]
 
 
 
 
-%% Supplementary Figure 3a 
-% Now plot LL + smoothe it
+%% Now plot LL + smoothe it
 close; 
 bnn = 5; 
 clear y 
