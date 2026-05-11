@@ -1,7 +1,7 @@
 clear ; close all ; 
 ogpath = '/Users/mac/Documents/python/ForagingByRichness/Decision_making_models/MATLAB/simulations/' ;
 cd(ogpath)
-cd('./simulationsOuputs') 
+cd('./simulationsOuputs') % simulations are available on figshare or can be generated using "simulateAgentsExperiment1_vMatchingEnv_RLvsForagingByRichness.m"
 
 files = dir;
 fnames = {files(find(~cellfun(@isempty,strfind({files.name},'simResults')))).name};
