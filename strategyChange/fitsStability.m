@@ -11,8 +11,6 @@ cd('strategyChange/')
 % first recover individual choice likelihood from fits 
 choiceLL_RLvsForaging
 
-figpath = '/Users/mac/Documents/MATLAB/ForagingByRichness/review/figs/';
-
 nsubs = length(trials);
 m=NaN(nsubs,2,2);
 fifty=NaN(nsubs,2,2);
@@ -62,15 +60,15 @@ lastaic(:,2)= aicbic(fifty(:,2,2),[fits(2).nParams]) ; %50 last trials RL
 yline(0,LineWidth=lw) ; xline(0,LineWidth=lw) ; hold on ;
 
 
-%%%%%9
+%%%%%
 scatter((firstaic(:,1)-firstaic(:,2)), (lastaic(:,1)-lastaic(:,2)),ms,'MarkerFaceColor','#0072BD','MarkerEdgeColor','none','MarkerFaceAlpha',0.5) ; 
 formatAxes(gca,1)
 xlabel(' AIC_{comp-thresh} - AIC_{comp-alt} \newline in first 50 trials')
 ylabel(' AIC_{comp-thresh} - AIC_{comp-alt} \newline in last 50 trials')
 % xlim([-1,1]*10^4)
-filename = 'strategyChange_compareChoiceLL_RLvsForaging' ; 
-saveas(gcf,fullfile(figpath,filename),format)
-%manually compute aic 
+% filename = 'strategyChange_compareChoiceLL_RLvsForaging' ; 
+% saveas(gcf,fullfile(figpath,filename),format)
+
 
 % model improvement: (interpreted as % better
 % http://ejwagenmakers.com/2004/aic.pdf
@@ -130,7 +128,7 @@ legend({'comp-thresh','','comp-alt'},"Location","southeast")
 ax = gca;
 ax.Toolbar.Visible = 'off';
 
-
-filename= 'plotcprob_compareChoiceLL_RLvsForaging' ;
-saveas(gcf,fullfile(figpath,filename),format)
+% 
+% filename= 'plotcprob_compareChoiceLL_RLvsForaging' ;
+% saveas(gcf,fullfile(figpath,filename),format)
 
