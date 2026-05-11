@@ -179,6 +179,7 @@ for k = 1:size(theta,2)
 
     realTheta(k)
     nanmean(realTheta(k)>squeeze(theta(:,k,:)))
+   
 end
 
 %% does foraging do more of those 300 trial same choices?
@@ -288,7 +289,8 @@ end
 
 %Figure 4.c-d
 
-behOI = pSwitch;
+behOI = 1./pSwitch;
+
 
 mdlStr = {'rl','foraging'};
 
@@ -300,9 +302,6 @@ for plt = 1:2
         'MarkerSize',15,'Color',[.4 .4 .4])
 
     sse = nansum((behOI(:,:,1) - behOI(:,:,plt+1)).^2,1);
-
-%     % cross entropy
-%     crossH = -sum(behOI(:,:,1).*log(behOI(:,:,plt+1))+(1-behOI(:,:,1)).*log(1-behOI(:,:,plt+1)))
 
     set(gca,'FontSize',14)
     title(strcat(sprintf('sse = %2.4f +/- %2.4f, %2.4f',...
@@ -320,13 +319,25 @@ end
 tmp = squeeze(nanmean(behOI,2)); % pull the behavior back in
 [h,p,ci,stat] = ttest((tmp(:,1)-tmp(:,2)).^2,(tmp(:,1)-tmp(:,3)).^2)
 
+diffs = (tmp(:,1)-tmp(:,2)).^2 - (tmp(:,1)-tmp(:,3)).^2;
+cohensD = nanmean(diffs) / nanstd(diffs);
+
+% 3. Print the formatted string
+fprintf('t(%d) = %.2f, p = %.3f, d = %.2f, 95%% Confidence Intervals = [%.2f, %.2f]\n', ...
+    stat.df, stat.tstat, p, cohensD, ci(1)*100, ci(2)*100);
+
 % now we want to ask if there's a systematic bias towards over/under
 % estimation; first with RL:
 nanmean((tmp(:,2)-tmp(:,1)))
 nanstd((tmp(:,2)-tmp(:,1)))
 [h,p,ci,stat] = ttest((tmp(:,2)-tmp(:,1)))
+d = nanmean((tmp(:,2)-tmp(:,1)))/nanstd((tmp(:,2)-tmp(:,1))) 
+fprintf('t(%d) = %.2f, p = %.3f, d = %.2f, 95%% Confidence Intervals = [%.2f, %.2f]\n', ...
+    stat.df, stat.tstat, p, d, ci(1)*100, ci(2)*100);
 
 nanmean((tmp(:,3)-tmp(:,1)))
 nanstd((tmp(:,3)-tmp(:,1)))
 [h,p,ci,stat] = ttest((tmp(:,3)-tmp(:,1)))
-
+d = nanmean((tmp(:,2)-tmp(:,1)))/nanstd((tmp(:,2)-tmp(:,1))) 
+fprintf('t(%d) = %.2f, p = %.3f, d = %.2f, 95%% Confidence Intervals = [%.2f, %.2f]\n', ...
+    stat.df, stat.tstat, p, d, ci(1)*100, ci(2)*100);
