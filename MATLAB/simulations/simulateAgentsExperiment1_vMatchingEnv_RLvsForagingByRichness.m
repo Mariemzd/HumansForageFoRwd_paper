@@ -194,7 +194,7 @@ parfor iter = 1:env.nSessionsPerTheta
    
     parsave(strcat('simResults',fNumStr),x)
     
-    % this means that each 'out' will be a complete set of simulations for
+    % this means that each 'out/x' will be a complete set of simulations for
     % both RL and foraging agents in 1 specific environment, we can then
     % concatenate them to put together many simulations all at once
 
