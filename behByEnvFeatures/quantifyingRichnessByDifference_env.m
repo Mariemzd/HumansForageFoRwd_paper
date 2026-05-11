@@ -1,7 +1,6 @@
 clear; close all ; 
 
-addpath('/Users/mac/Documents/MATLAB/general/')
-datafile =  '../data/singleiti_202203011023_lightweight.mat' ; 
+datafile =  './data/singleiti_202203011023_lightweight.mat' ; 
 load(datafile)
 
 % analyses found in figure 2 and supplementary figure S1C-G
@@ -128,10 +127,8 @@ for basis = 1:2
         end
         out = out(sum(isnan(out),2)==0,:);
     
-        % plot raw
-        %     plot(out(:,1),out(:,2),'.k');
-        
-        % else, let's do a histogram
+
+        % let's do a histogram
         edges = quantile(out(:,1),[0:1/hBins:1]);
         [~,binidx] = histc(out(:,1),edges);
     
@@ -142,10 +139,6 @@ for basis = 1:2
         lh(c) = plot(x,m,'.-','Color',clist(c,:),'MarkerSize',20);
         h = errbar(x,m,e); set(h,'Color',clist(c,:));
 
-%         phat = polyfit(out(:,1),out(:,2),1);
-%         xpos = [0:0.1:2.5];
-%         lh(c) = plot(xpos,polyval(phat,xpos))
-%         set(lh(c),'Color',clist(c,:));
         
         c = c+1;
     
@@ -183,7 +176,7 @@ for basis = 1:2
             if strcmp(analysis,'richness')
                 x = sum(tmp); % richness
             else
-                x = range(tmp)./sum(tmp); % difference/sparsity
+                x = range(tmp)./sum(tmp); % difference/discriminability
             end
     
             most = nanmean([trials(k).header.reward_structure]<thresh); % best option
@@ -197,8 +190,6 @@ for basis = 1:2
         end
         out = out(sum(isnan(out),2)==0,:);
     
-        % plot raw
-        %     plot(out(:,1),out(:,2),'.k');
         
         % else, let's do a histogram
         edges = quantile(out(:,1),[0:1/hBins:1]);
@@ -210,11 +201,7 @@ for basis = 1:2
         x = edges(1:end-1)+diff(edges)./2;
         lh(c) = plot(x,m,'.-','Color',clist(c,:),'MarkerSize',20);
         h = errbar(x,m,e); set(h,'Color',clist(c,:));
-    
-%         phat = polyfit(out(:,1),out(:,2),1);
-%         xpos = [0:0.1:2.5];
-%         lh(c) = plot(xpos,polyval(phat,xpos))
-%         set(lh(c),'Color',clist(c,:));
+   
         
         c = c+1;
     
@@ -237,7 +224,7 @@ end
 % saveas(gcf,'strategiesByRichnessAndSparsity_richnessByDifference','epsc')
 
 %% distributions - for each agent, we want to extract its fingerprint
-%   as a function of both sparsity and richness
+%   as a function of both discriminability and richness
 
 glmDist = 'binomial';
 % glmDist = 'normal';
@@ -430,7 +417,7 @@ if n1 == n2
 else 
     [p,h,stats] = ranksum(ds1,ds2) ;
 
-    % effect size from % https://pmc.ncbi.nlm.nih.gov/articles/PMC12701665/
+    
     num = stats.ranksum - (n1 * (n1 + 1)) / 2;
     den = sqrt(n1*n2*(n1+n2+1/12)) ;
     z = num/den ;
