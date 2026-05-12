@@ -1,6 +1,5 @@
 clear ; close all ; 
-ogpath = '/Users/mac/Documents/python/ForagingByRichness/Decision_making_models/MATLAB/simulations/' ;
-cd(ogpath)
+
 cd('./simulationOuputs_Experiment1') % simulations are available on figshare or can be generated using "simulateAgentsExperiment1_vMatchingEnv_RLvsForagingByRichness.m"
 
 files = dir;
