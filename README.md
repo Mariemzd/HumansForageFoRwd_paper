@@ -27,6 +27,11 @@ This repository contains the scripts and Jupyter notebooks required to generate 
 *   **Simulations:** Generate the simulations shown in Figure 4 using the MATLAB script `simulateAgentsExperiment1_vMatchingEnv_RLvsForagingByRichness.m`.
 *   **Plotting & Mixture Model:** To plot the results and run the exponential mixture model, use `compareTimes_RLvsForagingByRichness`.
 
+## Figure 5 
+*   **Simulations:** Generate the simulations shown in Figure 5 using the MATLAB script `simulateAgents_Experiment{n}_RLvsForagingByRichness.m`.
+
+
+
 ## Other
 *   **Supplementary Figure 3:** open the folder `strategyChange/` and run `fitsStability.m`
 *   **Supplementary Figure 6:** run `unchosenOption_exploreStrategy.m`
