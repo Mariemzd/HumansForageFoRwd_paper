@@ -1,8 +1,6 @@
 clear; close all ;
-cd /Users/mac/Documents/MATLAB/ForagingByRichness/review
-addpath fitting/
-load volatilityLMH_newstates2025.mat
-figpath = './figs/';
+load volatilityLMH_newstates2025.mat %found in Experiment3_data
+
 %% Supplementary figure S6
 % will generate supplementary figure S6D unless : 
 onset = 0; %1 for supplementary figure S6.B
@@ -137,8 +135,8 @@ else
     name='switch';
 end
 title(name)
-
-filename = ['histogram_difff',name,'without_last_exploited','50kboots_RLvsForaging.pdf'] ;
-saveas(gcf,fullfile(figpath,filename))
-
+% 
+% filename = ['histogram_difff',name,'without_last_exploited','50kboots_RLvsForaging.pdf'] ;
+% saveas(gcf,fullfile(figpath,filename))
+% 
 
