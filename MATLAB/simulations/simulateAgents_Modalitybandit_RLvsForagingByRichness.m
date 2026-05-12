@@ -1,10 +1,6 @@
-clear;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness/review/simulations/SimulateModality/') ; 
-
-addpath /Users/mac/Documents/MATLAB/ForagingByRichness/review/fitting/modality
-addpath /Users/mac/Documents/MATLAB/general/
-addpath '/Users/mac/Documents/MATLAB/ForagingByRichness/review/simulations/'
-%%
+%% generate experiment 5 simulations found in figure 5s-t
+clear; close all ; 
+%% fits and data can be found on figshare 
 touchbar = 1 ;
 if touchbar 
 name = 'touch'; 

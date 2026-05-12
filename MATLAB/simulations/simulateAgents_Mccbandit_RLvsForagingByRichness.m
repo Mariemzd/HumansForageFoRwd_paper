@@ -1,10 +1,6 @@
-clear;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness/review/simulations/SimulateMccBandit/') ; 
-
-addpath /Users/mac/Documents/MATLAB/ForagingByRichness/review/fitting/mccBandit/
-addpath /Users/mac/Documents/MATLAB/general/
-addpath '/Users/mac/Documents/MATLAB/ForagingByRichness/review/simulations/'
-%%
+%% generate experiment 4 simulations found in figure 5N-P
+clear; close all ; 
+%% these files can be found on figshare 
 cond = 3;
 if cond == 2
 name = '2arm'; 
@@ -17,7 +13,7 @@ load fitRLto_cardBandit3arm.mat_20rounds_251112.mat
 load cardBandit3arm.mat
 p_step = 0.2 ;
 elseif cond == 4 
-    name = '4arm'; 
+name = '4arm'; 
 load fitRLto_cardBandit4arm.mat_20rounds_251112.mat
 load cardBandit4arm.mat
 p_step =  0.2; %trials(1).header.probability_of_step ;

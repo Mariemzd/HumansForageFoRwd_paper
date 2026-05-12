@@ -1,18 +1,9 @@
+%% generate experiment 3 simulations found in figure 5j
+clear; close all ; 
 
-clear;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness/review/')
+load(fitspath) %change to fits path 
+load(datapath) %change to data path
 
-cd ./simulations/simulateVolatility/   
-addpath /Users/mac/Documents/MATLAB/general/
-
-load('fitRLtoVolatilityMTurk_20rounds_251106.mat')
-load('volatilityLMH_newstates2025.mat')
-
-
-% delete(gcp('nocreate')) ; % Shut down the parallel pool
-% 
-% create the parallel pool to use:
-% parpool(11); % leave me some CPUs, I have 12
 %%
 for cond = 1:7
      
@@ -21,8 +12,6 @@ for cond = 1:7
     p_step = data(1).step_params(1) ;
     stepSize = data(1).step_params(2) ;
     fit_idx = find([trials.group]==cond) ;
-
-
 
     name = ['vGroup',num2str(cond)] ;
     if ~exist(name, 'dir')

@@ -1,13 +1,8 @@
-clear;
-cd('/Users/mac/Documents/MATLAB/ForagingByRichness/review/simulations/SimulateMLmTurk/') ; 
-
-addpath /Users/mac/Documents/MATLAB/ForagingByRichness/review/fitting/MatchingLaw/
-addpath /Users/mac/Documents/MATLAB/general/
-addpath '/Users/mac/Documents/MATLAB/ForagingByRichness/review/simulations/'
-%%
-name = 'MatchingLawSims'; 
-load('/Users/mac/Documents/MATLAB/ForagingByRichness/review/fitting/MatchingLaw/fitRLto_machingLawData_202205051012_20rounds_251111.mat')
-load('/Users/mac/Documents/MATLAB/ForagingByRichness/review/fitting/MatchingLaw/machingLawData_202205051012.mat')
+%% generate experiment 2 simulations found in figure 5d-e
+clear; close all ; 
+name = 'simulations_Experiment2'; 
+load(fitspath) %change to fits path 
+load(datapath) %change to data path
 %%
 if ~exist(name, 'dir')
     mkdir(name);
