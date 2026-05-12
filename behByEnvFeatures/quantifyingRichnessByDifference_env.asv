@@ -220,10 +220,13 @@ for basis = 1:2
 
 end
 
-
+% save the figure
+% saveas(gcf,'strategiesByRichnessAndSparsity_richnessByDifference','epsc')
+%%
 
 %% now look at the actual behavior
 
+yIsOre = false; % else, switching
 
 figure(98); clf;
 set(gcf,'Position',[ 1062  386  251  480])
@@ -275,16 +278,14 @@ for basis = 1:2
             out(k.*nBins-nBins+bin,2) = nanmean(y(stp*bin-stp+1:stp*bin+stp));
         end
     end
-   
     out = out(sum(isnan(out),2)==0,:);
 
     
     [r,p] = corrcoef(out(:,1),out(:,2))
     
     edges = quantile(out(:,1),[0:1/hBins:1]);
-    [zeb,binidx] = histc(out(:,1),edges);
-    
-  
+    [~,binidx] = histc(out(:,1),edges);
+    keyboard
     m = arrayfun(@(x) nanmean(out(binidx==x,2)),[1:hBins]);
     e = arrayfun(@(x) nanste(out(binidx==x,2)),[1:hBins]);
     
@@ -294,13 +295,16 @@ for basis = 1:2
     plot(x,m,'.-k','MarkerSize',20);
     h = errbar(x,m,e);
     set(h,'Color','k');
-
+    
+%     ylim([0 1]);
     xlim(xlimits)
     
     set(gca,'FontSize',16)
- 
+    if yIsOre
+        ylabel('p(explore)')
+    else
         ylabel('p(switch)')
- 
+    end
     xlabel(analysis)
 
 end
