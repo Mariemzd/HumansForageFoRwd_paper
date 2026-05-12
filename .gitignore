@@ -16,3 +16,4 @@ quick_plot/
 simulation_modules/
 data/
 MATLAB/simulations/compareTimes_RLvsForagingByRichness_old.m
+MATLAB/simulations/HMMdynamics_compareTimes.mat

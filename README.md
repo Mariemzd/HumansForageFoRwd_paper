@@ -30,6 +30,7 @@ This repository contains the scripts and Jupyter notebooks required to generate 
 ## Other
 *   **Supplementary Figure 3:** open the folder `strategyChange/` and run `fitsStability.m`
 *   **Supplementary Figure 6:** run `unchosenOption_exploreStrategy.m`
+* HMM fits and explore/exploit dynamics analyses can be found in `\MATLAB\simulations\exploreDynamics.m`
 
 ## Data Availability
 All behavioral data from all experiments, all model fits, and all simulations used for these analyses are available on figshare under : https://doi.org/10.6084/m9.figshare.32193990 

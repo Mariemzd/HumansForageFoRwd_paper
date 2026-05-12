@@ -1,7 +1,7 @@
 clear ; close all ; 
 ogpath = '/Users/mac/Documents/python/ForagingByRichness/Decision_making_models/MATLAB/simulations/' ;
 cd(ogpath)
-cd('./simulationsOuputs') % simulations are available on figshare or can be generated using "simulateAgentsExperiment1_vMatchingEnv_RLvsForagingByRichness.m"
+cd('./simulationOuputs_Experiment1') % simulations are available on figshare or can be generated using "simulateAgentsExperiment1_vMatchingEnv_RLvsForagingByRichness.m"
 
 files = dir;
 fnames = {files(find(~cellfun(@isempty,strfind({files.name},'simResults')))).name};
@@ -289,7 +289,7 @@ end
 
 %Figure 4.c-d
 
-behOI = 1./pSwitch;
+behOI = pSwitch;
 
 
 mdlStr = {'rl','foraging'};
@@ -341,3 +341,55 @@ nanstd((tmp(:,3)-tmp(:,1)))
 d = nanmean((tmp(:,2)-tmp(:,1)))/nanstd((tmp(:,2)-tmp(:,1))) 
 fprintf('t(%d) = %.2f, p = %.3f, d = %.2f, 95%% Confidence Intervals = [%.2f, %.2f]\n', ...
     stat.df, stat.tstat, p, d, ci(1)*100, ci(2)*100);
+
+%% let's look at the times, maybe compare the stickiness of the real data against our mass of simulations
+
+maxNComp = 2;
+
+figure('Position',[476   330   604   536]);
+
+for model = 1:2
+    switch model
+        case 1
+            selex = strcmp({out.type},'rl');
+            tStr = 'rl'
+            ax1pos = [1:3];
+            ax2pos = [5:6];
+        case 2
+            selex = strcmp({out.type},'f');
+            tStr = 'foraging'
+            ax1pos = [7:9];
+            ax2pos = [11:12];
+    end
+
+    times = [[out(selex).times]-1]; % do the minus up front
+
+    subplot(2,6,ax1pos);
+    twoMixLogPlot(times)
+    title(tStr)
+    ylim([10.^-4, 10^0])
+
+    % now calculate the log likelihood and add that to the plot
+    loglik = NaN(1,maxNComp);
+    try
+        for k = 1:maxNComp
+            [~,~,loglik(k)] = discreteExpMix(times,k);
+        end
+    end
+    
+    subplot(2,6,ax2pos);
+    plot([1:maxNComp],loglik,'.-k','MarkerSize',20)
+    set(gca,'FontSize',16,'XTick',[1:maxNComp]);
+    xlim([0 maxNComp+1]); %ylim([-3.5*10^4, -3*10^4])
+    ylabel('log likelihood')
+    xlabel('n components')
+    
+    length(times)
+    
+    llr = -2*(loglik(1) - loglik(2))
+    df1 = 1;
+    df2 = 3;
+    df = df2 - df1;
+    pAdd2 = 1-chi2cdf(llr,df)
+
+end

@@ -11,7 +11,7 @@ load(datapath)
 
 %% 
 cd(folderpath)
-name = 'simulationsOuputs' ; %foldername
+name = 'simulationOuputs_Experiment1' ; %foldername
 
 if ~exist(name, 'dir')
     mkdir(name);
