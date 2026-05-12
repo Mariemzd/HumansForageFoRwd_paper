@@ -31,9 +31,9 @@ Scripts are found in `\modelling_matlab\simulations`
 *   **Plotting & Mixture Model:** To plot the results and run the exponential mixture model, use `compareTimes_RLvsForagingByRichness`.
 
 ## Figure 5 
-Scripts are found in `\modelling_matlab\simulations`
-*   **Simulations:** Generate the simulations shown in Figure 5 using the MATLAB script `simulateAgents_Experiment{n}_RLvsForagingByRichness.m`.
 
+*   **Simulations:** Generate the simulations shown in Figure 5 using the MATLAB script `simulateAgents_Experiment{n}_RLvsForagingByRichness.m`. These scripts can be found in `\modelling_matlab\simulations`
+*   **Visualisation for Figure 5:** Generates all figures in figure 5 `Figure5_Experiment{n}.m`. These scripts can be found in `\modelling_matlab\figure5`
 
 ## Other
 *   **Supplementary Figure 3:** open the folder `strategyChange/` and run `fitsStability.m`
