@@ -22,7 +22,7 @@ This repository contains the scripts and Jupyter notebooks required to generate 
     	*   **Fitting:** `fitModels.ipynb`: This notebook contains the python version of the the models used to generate Figure 3 and Supplementary Figure 4.
 	*   **Plotting:** `FigureFitRichnessExperiment1_supplementary.ipynb`: Run this notebook to generate the visualisations. These scripts were developed and tested using Python 3.11
     *   **MATLAB:** 
-        *   **Fitting:** Run `fitRLtoMTurk_RLvsForagingByRichness.m`. This is the main script that fits the data by calling the individual models (which are modularized into their 		own separate scripts). The original fits were generated using Matlab version
+        *   **Fitting:** Run `fitRLtoMTurk_RLvsForagingByRichness.m`. This is the main script that fits the data by calling the individual models (which are modularized into their 		own separate scripts). The original fits were generated using Matlab version R2022a
         *   **Plotting (Panels G–K):** Run `evalFits_RLvsForagingByRichness.m` to plot the resulting model fits and log-likelihoods.
 
 ## Figure 4
